@@ -1,20 +1,29 @@
 from songs import Song
 
+
 class Playlist:
-    def __init(self, name, repeat=False, shuffle=False):
+    def __init__(self, name, repeat=False, shuffle=False):
         self.name = name
         self.repeat = repeat
         self.shuffle = shuffle
-
+        self.songs = []
 
     def add_song(self, song):
-        pass
+        self.songs.append(song)
 
     def remove_song(self, song):
-        pass
+        self.songs.remove(song)
+
+    def add_songs(self, songs):
+        self.songs += songs
 
     def total_length(self):
-        pass
+        from datetime import timedelta
+        total_in_seconds = 0
+        for song in self.songs:
+            total_in_seconds += song.get_length(seconds=True)
+
+        return str(timedelta(seconds=total_in_seconds))
 
     def artists(self):
         pass
