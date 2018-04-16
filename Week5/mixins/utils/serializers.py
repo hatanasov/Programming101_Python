@@ -1,5 +1,6 @@
 import json
 
+
 class Jsonable:
     serializable_types = (
         int,
@@ -29,7 +30,30 @@ class Jsonable:
 
     @classmethod
     def from_json(cls, json_string):
-        pass
+        dict_ = json.loads(json_string)
+        new_obj = cls()
+        for k, v in dict_["dict"].items():
+            if type(v) == dict and "class_name" in v:
+                # print(new_obj.__class__.__name__)
+                # print(v["class_name"])
+                if new_obj.__class__.__name__ != dict_["class_name"]:
+                    # if v["class_name"] != dict_["class_name"]:
+                    raise ValueError
+                value_obj = cls()
+                for key, value in v["dict"].items():
+                    setattr(value_obj, key, value)
+                setattr(new_obj, k, value_obj)
+            else:
+                setattr(new_obj, k, v)
+        return new_obj
+
+    def __eq__(self, other):
+        if self.__dict__ == other.__dict__ and \
+                self.__class__.__name__ == other.__class__.__name__:
+            return True
+        else:
+            return False
+
 
 # class Xmlable:
 #     def to_xml():
@@ -39,5 +63,3 @@ class Jsonable:
 #     @classmethod
 #     def from_xml(cls, xml_string):
 #         pass
-
-
