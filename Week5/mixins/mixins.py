@@ -11,3 +11,10 @@ class Person(Jsonable):
         self.name = name
         self.age = age
 
+
+ico = Person(name="Ico", age=30)
+ivo = Person(name="Ivo", age=25)
+setattr(ico, frend, ivo)
+setattr(ivo, frend, ico)
+ico_attributs = ico.to_json()
+print(ico_attributs)

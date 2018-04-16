@@ -62,11 +62,6 @@ class TestMusicPlayer(unittest.TestCase):
         with self.subTest("Test lenght of song instance as it is given (string)"):
             self.assertEqual(self.other_song.get_length(), song_exact_lenght)
 
-        
-
-
-
-
 
 if __name__ == "__main__":
     unittest.main()

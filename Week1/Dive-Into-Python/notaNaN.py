@@ -5,4 +5,4 @@ def nan_expand(times):
         return '""'
     return '"' + string * times + nan + '"'
 
-print(nan_expand(4))
+# print(nan_expand(4))
