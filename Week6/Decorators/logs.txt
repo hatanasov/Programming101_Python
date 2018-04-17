@@ -1,0 +1,9 @@
+something_heavy was called and took 0:00:02.002127 seconds to completeget_low was called and took 0:00:00.000003 seconds to completeget_low was called and took 0:00:00.000004 seconds to complete
+get_low was called and took 0:00:00.000003 seconds to complete
+get_low was called and took 0:00:00.000003 seconds to complete
+something_heavy was called and took 0:00:02.002061 seconds to complete
+get_low was called and took 0:00:00.000007 seconds to complete
+something_heavy was called and took 2.002091 seconds to complete
+get_low was called and took 3e-06 seconds to complete
+something_heavy was called and took 2.002091 seconds to complete
+something_heavy was called and took 2.002122 seconds to complete
