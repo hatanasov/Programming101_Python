@@ -15,22 +15,6 @@ def accepts(*args):
     return accept_func
 
 
-# @accepts(str)
-# def say_hello(name):
-#     return "Hello, I am {}".format(name)
-
-
-# @accepts(str, int)
-# def deposit(name, money):
-#     print("{} sends {} $!".format(name, money))
-#     return True
-
-# print(say_hello("ico"))
-# say_hello(4)
-# print(deposit("RadoRado", 10))
-# print(deposit("ico", {"age": 10}))
-
-
 def encrypt(key):
     def encrypter(func):
         @wraps(func)
@@ -45,8 +29,7 @@ def encrypt(key):
             lower_table = str.maketrans(alphabet_lower, shifted_alphabet_lower)
             upper_table = str.maketrans(alphabet_upper, shifted_alphabet_upper)
             result_str = message.translate(lower_table).translate(upper_table)
-            print(result_str)
-            return func
+            return result_str
         return decorated
     return encrypter
 
@@ -67,13 +50,6 @@ def log(log_file):
     return logger
 
 
-# @log("logs.txt")
-# @encrypt(2)
-# def get_low():
-#     return "Get get get low"
-
-
-# get_low()
 def performance(log_file):
     def logger(origin_func):
         @wraps(origin_func)
@@ -89,6 +65,35 @@ def performance(log_file):
                 f.write(log)
         return decorated_logger
     return logger
+
+
+# @accepts(str)
+# def say_hello(name):
+#     return "Hello, I am {}".format(name)
+
+
+# print(say_hello("Ico"))
+# print(say_hello(10))
+
+# @accepts(str, int)
+# def deposit(name, money):
+#     print("{} sends {} $!".format(name, money))
+#     return True
+
+
+# print(say_hello("ico"))
+# say_hello(4)
+# print(deposit("RadoRado", 10))
+# print(deposit("ico", {"age": 10}))
+
+
+# @log("logs.txt")
+# @encrypt(2)
+# def get_low():
+#     return "Get get get low"
+
+
+# get_low()
 
 
 # @performance('logs.txt')

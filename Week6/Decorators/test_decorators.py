@@ -2,8 +2,9 @@ import unittest
 from decorators import accepts
 from decorators import encrypt
 
+
 class TestDecorators(unittest.TestCase):
-    
+
     def test_accept_decorator(self):
 
         @accepts(str)
@@ -22,8 +23,7 @@ class TestDecorators(unittest.TestCase):
                 print_something(10)
 
         with self.subTest("Test accepts decorator with a few diferent type elements."):
-            self.assertEqual(print_all_elements("Ico", 2000), {"Ico":2000})
-
+            self.assertEqual(print_all_elements("Ico", 2000), {"Ico": 2000})
 
         with self.subTest("Test accepts decorator with a few diferent type elements, one is wrong"):
             with self.assertRaises(TypeError):
@@ -34,8 +34,6 @@ class TestDecorators(unittest.TestCase):
         def get_low():
             return "Get get get low"
         self.assertEqual(get_low(), "Igv igv igv nqy")
-
-
 
 
 if __name__ == "__main__":
