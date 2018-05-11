@@ -47,22 +47,29 @@ def iterator(d, key, val):
     if type(d) in iterables:
         for element in d:
             if type(element) is dict:
-                deep_update(element, key, val)
+                deep_update_copy(element, key, val)
             else:
                 iterator(element, key, val)
 
 
-def deep_update(data, key, val):
-    # import pdb
-    # pdb.set_trace()
+def deep_update_copy(data, key, val):
+    if type(data) is not dict:
+        raise ValueError("The data MUST be class 'dict'")
     for k, v in data.items():
         if k == key:
             data[k] = val
         elif type(v) is dict:
-            deep_update(v, key, val)
+            deep_update_copy(v, key, val)
         else:
             iterator(v, key, val)
-    return data
+    # return data
+
+
+def deep_update(data, key, val):
+    import copy
+    copy_data = copy.deepcopy(data)
+    deep_update_copy(copy_data, key, val)
+    return copy_data
 
 
 def deep_apply(func, data):

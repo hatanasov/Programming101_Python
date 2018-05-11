@@ -25,7 +25,7 @@ class TestGraphs(unittest.TestCase):
             "a": 10,
             "b": {"a": 20},
             "c": [
-                {"b": [{"a": 30}]}
+                {"b": [{"a": 30}, {"b": 40}]}
             ]
         }
 
@@ -64,7 +64,7 @@ class TestGraphs(unittest.TestCase):
 
     def test_deep_find_all(self):
         key = "b"
-        result = [{"a": 20}, [{"a": 30}]]
+        result = [{"a": 20}, [{"a": 30}, {"b": 40}]]
         self.assertEqual(graphs.deep_find_all(self.data_all, key), result)
 
     def test_deep_find_all_with_no_key_found(self):
@@ -77,16 +77,23 @@ class TestGraphs(unittest.TestCase):
         self.assertEqual(graphs.deep_update(self.data_all, "b", 20), result)
 
     def test_deep_update_deep_inside(self):
-        result = {"a": 50, "b": {"a": 50}, "c": [
-            {"b": [{"a": 50}]}]}
-        self.assertEqual(graphs.deep_update(self.data_all, "a", 50), result)
+        result = {'a': 100, 'b': {'a': 100},
+                  'c': [{'b': [{'a': 100}, {'b': 40}]}]}
+        self.assertEqual(graphs.deep_update(self.data_all, "a", 100), result)
+
+    def test_deep_update(self):
+        data = {"a": [[[[[{"b": 100, "b": 10}, ({"b": []})]]]]]}
+        result = {"a": [[[[[{"b": True, "b": True}, ({"b": True})]]]]]}
+        self.assertEqual(graphs.deep_update(data, "b", True), result)
+        self.assertEqual(
+            data, {"a": [[[[[{"b": 100, "b": 10}, ({"b": []})]]]]]})
 
     def tearDown(self):
         self.data_all = {
             "a": 10,
             "b": {"a": 20},
             "c": [
-                {"b": [{"a": 30}]}
+                {"b": [{"a": 30}, {"b": 40}]}
             ]
         }
 
