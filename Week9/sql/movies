@@ -1,0 +1,8 @@
+SELECT STARNAME, MIN(MOVIEYEAR)
+FROM starsin
+GROUP BY STARNAME;
+
+SELECT starsin.starname, MIN(starsin.movieyear - moviestar.birthdate)
+FROM starsin
+INNER JOIN moviestar ON moviestar.name = starsin.starname
+GROUP BY STARNAME;
