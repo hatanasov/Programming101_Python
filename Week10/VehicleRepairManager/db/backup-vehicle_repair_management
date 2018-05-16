@@ -1,0 +1,61 @@
+PRAGMA foreign_keys=OFF;
+BEGIN TRANSACTION;
+CREATE TABLE mechanic (
+    BASE_ID INTEGER,
+    TITLE TEXT NOT NULL,
+    FOREIGN KEY (BASE_ID) REFERENCES BASE_USER(ID)
+);
+INSERT INTO "mechanic" VALUES(2,'engines');
+INSERT INTO "mechanic" VALUES(4,'transmissions');
+CREATE TABLE base_user (
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    USER_NAME TEXT UNIQUE NOT NULL ,
+    EMAIL TEXT UNIQUE NOT NULL ,
+    PHONE_NUMBER INTEGER UNIQUE NOT NULL ,
+    ADDRESS TEXT NOT NULL
+);
+INSERT INTO "base_user" VALUES(1,'hristo','hristo@gmail.com',888123,'Sofia');
+INSERT INTO "base_user" VALUES(2,'pesho','pesho@abv.bg',87712,'Sofia');
+INSERT INTO "base_user" VALUES(3,'Poli','polssy@gmail',899,'Sofia');
+INSERT INTO "base_user" VALUES(4,'ivan','ivan@srv.com',9997,'Sofia');
+CREATE TABLE client (
+    BASE_ID INTEGER,
+    FOREIGN KEY (BASE_ID) REFERENCES BASE_USER(ID)
+);
+INSERT INTO "client" VALUES(1);
+INSERT INTO "client" VALUES(2);
+CREATE TABLE vehicle (
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    CATEGORY TEXT NOT NULL,
+    MAKE TEXT NOT NULL,
+    MODEL TEXT NOT NULL,
+    REGISTER_NUMBER TEXT UNIQUE NOT NULL,
+    GEAR_BOX TEXT NOT NULL, 
+    OWNER INTEGER NOT NULL, 
+    FOREIGN KEY(OWNER) REFERENCES CLIENT(BASE_ID)
+);
+INSERT INTO "vehicle" VALUES(1,'Car','fiat','punto','CT666','Manual',1);
+INSERT INTO "vehicle" VALUES(3,'car','mazda','premacy','M332','automatic',3);
+CREATE TABLE mechanic_service (
+    ID INTEGER PRIMARY KEY AUTOINCREMENT, 
+    MECHANIC_ID INTEGER NOT NULL,
+    SERVICE_ID INTEGER NOT NULL,
+    FOREIGN KEY (MECHANIC_ID) REFERENCES MECHANIC(BASE_ID),
+    FOREIGN KEY (SERVICE_ID) REFERENCES SERVICE(ID)
+);
+INSERT INTO "mechanic_service" VALUES(7,2,1);
+INSERT INTO "mechanic_service" VALUES(8,2,2);
+INSERT INTO "mechanic_service" VALUES(9,4,3);
+CREATE TABLE service (
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    NAME TEXT UNIQE NOT NULL
+);
+INSERT INTO "service" VALUES(1,'change oil');
+INSERT INTO "service" VALUES(2,'engine diagnostic');
+INSERT INTO "service" VALUES(3,'transsmision repare');
+DELETE FROM sqlite_sequence;
+INSERT INTO "sqlite_sequence" VALUES('base_user',4);
+INSERT INTO "sqlite_sequence" VALUES('vehicle',3);
+INSERT INTO "sqlite_sequence" VALUES('mechanic_service',9);
+INSERT INTO "sqlite_sequence" VALUES('service',3);
+COMMIT;
