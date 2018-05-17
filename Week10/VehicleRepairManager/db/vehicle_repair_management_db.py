@@ -13,7 +13,7 @@ drop_tables = """DROP TABLE IF EXISTS """
 for table in tables:
     c.execute(drop_tables + table)
 
-db.commit()
+# db.commit()
 
 table_base_user = """
 CREATE TABLE IF NOT EXISTS base_user (
@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS base_user (
 
 table_client = """
 CREATE TABLE IF NOT EXISTS client (
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
     BASE_ID INTEGER,
     FOREIGN KEY (BASE_ID) REFERENCES BASE_USER(ID)
 )   
@@ -41,13 +42,14 @@ CREATE TABLE IF NOT EXISTS vehicle (
     REGISTER_NUMBER TEXT UNIQUE NOT NULL,
     GEAR_BOX TEXT NOT NULL, 
     OWNER INTEGER NOT NULL, 
-    FOREIGN KEY(OWNER) REFERENCES CLIENT(BASE_ID)
+    FOREIGN KEY(OWNER) REFERENCES CLIENT(ID)
 )
 """
 
 
 table_mechanic = """
 CREATE TABLE IF NOT EXISTS mechanic (
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
     BASE_ID INTEGER,
     TITLE TEXT NOT NULL,
     FOREIGN KEY (BASE_ID) REFERENCES BASE_USER(ID)
@@ -59,7 +61,7 @@ CREATE TABLE IF NOT EXISTS mechanic_service (
     ID INTEGER PRIMARY KEY AUTOINCREMENT, 
     MECHANIC_ID INTEGER NOT NULL,
     SERVICE_ID INTEGER NOT NULL,
-    FOREIGN KEY (MECHANIC_ID) REFERENCES MECHANIC(BASE_ID),
+    FOREIGN KEY (MECHANIC_ID) REFERENCES MECHANIC(ID),
     FOREIGN KEY (SERVICE_ID) REFERENCES SERVICE(ID)
 )
 """
@@ -89,7 +91,6 @@ create_table = (table_base_user, table_client, table_vehicle,
 
 for table in create_table:
     c.execute(table)
-
-db.commit()
+    db.commit()
 
 db.close()
