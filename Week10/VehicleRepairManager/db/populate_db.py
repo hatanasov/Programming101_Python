@@ -1,9 +1,13 @@
 import sqlite3
 
+DB_NAME = "vehicle_repair_management.db"
 
-base_user_client = [(5, 'Hristo', 'hristo@gmail.com', 088123, 'Sofia'),
-                    (6, 'Poli', 'poli@yahoo.com', 0898234, 'Montana'),
-                    (7, 'Sasho', 'sasho_123@abv.bg', 088345, 'Plovdiv')
+db = sqlite3.connect(DB_NAME)
+c = db.cursor()
+
+base_user_client = [(5, 'Hristo', 'hristo@gmail.com', '088123', 'Sofia'),
+                    (6, 'Poli', 'poli@yahoo.com', '0898234', 'Montana'),
+                    (7, 'Sasho', 'sasho_123@abv.bg', '088345', 'Plovdiv')
                     ]
 
 client_id = [(5),
@@ -21,10 +25,10 @@ vehicle_repair = [('2018-05-20', '9:00', 1, 150, 1),
                   ('2018-05-20', '11:00', 3, 400, 3)
                   ]
 
-base_user_mechanic = [(1, 'Ivo', 'ivo@cs.com', 0778123, 'Sofia'),
-                      (2, 'Joro', 'joro@cs.com', 0778124, 'Sofia'),
-                      (3, 'Pepi', 'pepi@cs.com', 077125, 'Sofia'),
-                      (4, 'Mecho', 'mecho@cs.com', 077126, 'Sofia')
+base_user_mechanic = [(1, 'Ivo', 'ivo@cs.com', '0778123', 'Sofia'),
+                      (2, 'Joro', 'joro@cs.com', '0778124', 'Sofia'),
+                      (3, 'Pepi', 'pepi@cs.com', '077125', 'Sofia'),
+                      (4, 'Mecho', 'mecho@cs.com', '077126', 'Sofia')
                       ]
 
 mechanic = [(1, 'engines'),
@@ -46,8 +50,9 @@ service = [(1, 'change oil and filters'),
 
 add_base_user = """
 INSERT INTO base_user (id, user_name, email, phone_number, address)
-    VALUES (?, ?, ?, ?)
+    VALUES (?, ?, ?, ?, ?)
 """
+
 
 add_id_in_client_table = """
 INSERT INTO client (BASE_ID)
@@ -79,17 +84,21 @@ INSERT INTO service (ID, NAME)
     VALUES (?, ?)
 """
 
-add_mechanic_service = """
-INSERT INTO mechanic_service (ID, MECHANIC_ID, SERVICE_ID)
-    VALUES (?, ?, ?)
-"""
 
-DB_NAME = "vehicle_repair_management.db"
-
-db = sqlite3.connect(DB_NAME)
-c = db.cursor()
-
-### Actual insertion ... 
+try:
+    c.executemany(add_base_user, base_user_mechanic)
+    c.executemany(add_base_user, base_user_client)
+    c.executemany(add_id_in_client_table, client_id)
+    c.executemany(add_mechanic_title, mechanic)
+    c.executemany(add_car_to_vehicle_table, vehicle)
+    c.executemany(add_vehicle_repair, vehicle_repair)
+    c.executemany(add_mechanic_service, mechanic_service)
+    c.executemany(add_service, service)
+except Exception as e:
+    print(e)
+    db.rollback()
+else:
+    db.commit()
 
 
 db.close()
