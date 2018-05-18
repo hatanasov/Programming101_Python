@@ -10,9 +10,9 @@ base_user_client = [(5, 'Hristo', 'hristo@gmail.com', '088123', 'Sofia'),
                     (7, 'Sasho', 'sasho_123@abv.bg', '088345', 'Plovdiv')
                     ]
 
-client_id = [(5),
-             (6),
-             (7)
+client_id = [('5'),
+             ('6'),
+             ('7')
              ]
 
 vehicle = [(1, 'Car', 'fiat', 'punto', 'CT543', 'manual', 5),
@@ -31,10 +31,10 @@ base_user_mechanic = [(1, 'Ivo', 'ivo@cs.com', '0778123', 'Sofia'),
                       (4, 'Mecho', 'mecho@cs.com', '077126', 'Sofia')
                       ]
 
-mechanic = [(1, 'engines'),
-            (2, 'electrics'),
-            (3, 'brakes and suspension'),
-            (4, 'motorcycles')
+mechanic = [('1', 'engines'),
+            ('2', 'electrics'),
+            ('3', 'brakes and suspension'),
+            ('4', 'motorcycles')
             ]
 
 mechanic_service = [(1, 3, 2),
@@ -60,7 +60,7 @@ INSERT INTO client (BASE_ID)
 """
 
 add_mechanic_title = """
-INSERT INTO mechanic
+INSERT INTO mechanic (BASE_ID, TITLE)
     VALUES (?, ?)
 """
 
@@ -84,7 +84,6 @@ INSERT INTO service (ID, NAME)
     VALUES (?, ?)
 """
 
-
 try:
     c.executemany(add_base_user, base_user_mechanic)
     c.executemany(add_base_user, base_user_client)
@@ -95,9 +94,13 @@ try:
     c.executemany(add_mechanic_service, mechanic_service)
     c.executemany(add_service, service)
 except Exception as e:
-    print(e)
+    print("""All or some tables are populated yet.
+Try to renew tables with starting <vehicle_repair_management_db.py> script,
+then populate them again.
+""")
     db.rollback()
 else:
+    (print("All tables are populated."))
     db.commit()
 
 

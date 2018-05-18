@@ -6,7 +6,7 @@ db = sqlite3.connect(DB_NAME)
 c = db.cursor()
 
 tables = ("base_user", "client", "vehicle",
-          "mechanic", "mechanic_services", "service", "vehicle_repair")
+          "mechanic", "mechanic_service", "service", "vehicle_repair")
 
 drop_tables = """DROP TABLE IF EXISTS """
 
@@ -18,10 +18,10 @@ for table in tables:
 table_base_user = """
 CREATE TABLE IF NOT EXISTS base_user (
     ID INTEGER PRIMARY KEY AUTOINCREMENT,
-    USER_NAME TEXT UNIQUE NOT NULL ,
-    EMAIL TEXT UNIQUE ,
-    PHONE_NUMBER INTEGER UNIQUE NOT NULL ,
-    ADDRESS TEXT NOT NULL
+    USER_NAME TEXT UNIQUE NOT NULL,
+    EMAIL TEXT,
+    PHONE_NUMBER INTEGER NOT NULL ,
+    ADDRESS TEXT
 )
 """
 
